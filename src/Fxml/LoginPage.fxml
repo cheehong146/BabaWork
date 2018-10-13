@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login_page.Controller">
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginPageController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -64,7 +64,7 @@
                         </Hyperlink>
                         <VBox prefHeight="69.0" prefWidth="82.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                            <children>
-                              <Button id="btn_points" fx:id="btnPoints" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="POINTS" />
+                              <Button id="btn_points" fx:id="btnPoints" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="POINTS" onAction="#btnPointClick"/>
                               <Button id="btn_code" fx:id="btnCode" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" text="CODE">
                                  <VBox.margin>
                                     <Insets />
