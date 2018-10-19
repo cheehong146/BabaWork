@@ -14,6 +14,7 @@ public abstract class Navigation {
         try{
             Parent root = FXMLLoader.load(getClass().getResource(fxml));
             Stage stage = new Stage();
+            stage.setResizable(false);
             stage.setScene((new Scene(root)));
             stage.show();
         }catch (IOException e){

@@ -11,17 +11,15 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginPageController">
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginPageController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <BorderPane layoutX="-80.0" layoutY="-31.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <top>
-                  <ComboBox prefWidth="900.0" BorderPane.alignment="CENTER" />
-               </top>
                <center>
                   <VBox BorderPane.alignment="CENTER">
                      <children>
@@ -37,13 +35,22 @@
                               </ImageView>
                               <VBox alignment="CENTER" maxHeight="-Infinity" minWidth="-Infinity" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="300.0">
                                  <children>
-                                    <TextField id="txt_username" fx:id="txtUsername" promptText="username" style="-fx-alignment: center;">
+                                    <TextField id="txt_username" fx:id="txtUsername" promptText="USERNAME" style="-fx-alignment: center; -fx-faint-focus-color: transparent; -fx-text-box-border: transparent; -fx-focus-color: transparent;">
                                        <VBox.margin>
                                           <Insets top="10.0" />
                                        </VBox.margin>
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
                                     </TextField>
-                                    <PasswordField id="txt_password" fx:id="txtPassword" promptText="password" style="-fx-alignment: center;" />
-                                    <Button id="btn_login" fx:id="btnLogin" mnemonicParsing="false" onAction="#btnLoginClick" prefHeight="32.0" prefWidth="82.0" text="LOGIN" />
+                                    <PasswordField id="txt_password" fx:id="txtPassword" promptText="PASSWORD" style="-fx-alignment: center; -fx-text-box-border: transparent; -fx-focus-color: transparent;">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font></PasswordField>
+                                    <Button id="btn_login" fx:id="btnLogin" mnemonicParsing="false" onAction="#btnLoginClick" text="LOGIN">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font></Button>
                                  </children>
                               </VBox>
                            </children>
@@ -59,16 +66,22 @@
                      <children>
                         <Hyperlink id="hl_register" fx:id="hlRegister" text="Register?" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <font>
-                              <Font size="14.0" />
+                              <Font size="24.0" />
                            </font>
                         </Hyperlink>
                         <VBox prefHeight="69.0" prefWidth="82.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                            <children>
-                              <Button id="btn_points" fx:id="btnPoints" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="POINTS" onAction="#btnPointClick"/>
-                              <Button id="btn_code" fx:id="btnCode" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" text="CODE">
+                              <Button id="btn_points" fx:id="btnScore" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnScoreClick" text="SCORE">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font></Button>
+                              <Button id="btn_code" fx:id="btnCode" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" text="VIEW CODE" onAction="#btnViewCodeClick">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
                               </Button>
                            </children>
                         </VBox>
@@ -78,6 +91,22 @@
                      </BorderPane.margin>
                   </AnchorPane>
                </bottom>
+               <top>
+                  <HBox minHeight="-Infinity" prefHeight="64.0" spacing="25.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnBack" mnemonicParsing="false" onAction="#btnBackClick" prefHeight="48.0" prefWidth="48.0" text="Back" />
+                        <Button fx:id="btnRetry" mnemonicParsing="false" onAction="#btnRetryClick" prefHeight="48.0" prefWidth="48.0" text="Refresh" />
+                        <ComboBox fx:id="ddlUrl" prefHeight="48.0" prefWidth="1100.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </HBox>
+               </top>
             </BorderPane>
       </children>
     </AnchorPane>
