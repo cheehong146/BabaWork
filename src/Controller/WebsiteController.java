@@ -6,6 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,16 +33,20 @@ public class WebsiteController extends Navigation implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         txtAreaContents.setText(loremIpsum);
+        txtAreaContents.setWrapText(true);
+//        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource("images/back.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+//        btnBack.setBackground(new Background(backgroundImage));
+
     }
 
     @FXML
-    private void onBackPressed(ActionEvent actionEvent){
+    private void btnBackClick(ActionEvent actionEvent){
         closeCurScene(actionEvent);
         loadStage("/Fxml/SimulationChoicePage.fxml", actionEvent);
     }
 
     @FXML
-    private void onContinuePressed(ActionEvent actionEvent){
+    private void btnContinueClick(ActionEvent actionEvent){
         closeCurScene(actionEvent);
         loadStage("/Fxml/LoginPage.fxml", actionEvent);
     }

@@ -5,31 +5,35 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.WebsiteController">
+<VBox prefHeight="766.0" prefWidth="1366.0" style="-fx-background-color: #FFAD5B;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.WebsiteController">
   <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
-         <top>
-            <Button fx:id="btnBack" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBackPressed" prefHeight="86.0" prefWidth="86.0" text="Back" BorderPane.alignment="TOP_LEFT">
-               <BorderPane.margin>
-                  <Insets left="50.0" top="50.0" />
-               </BorderPane.margin>
-            </Button>
-         </top>
+      <BorderPane prefHeight="768.0" prefWidth="1366.0">
          <center>
-            <TextArea fx:id="txtAreaContents" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="20.0" BorderPane.alignment="CENTER">
+            <TextArea fx:id="txtAreaContents" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="20.0" style="-fx-border-width: 4px;" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets left="200.0" right="200.0" top="20.0" />
                </BorderPane.margin>
             </TextArea>
          </center>
          <bottom>
-            <Button fx:id="btnContinue" mnemonicParsing="false" onAction="#onContinuePressed" prefHeight="48.0" prefWidth="256.0" text="CONTINUE" BorderPane.alignment="CENTER">
+            <Button fx:id="btnContinue" mnemonicParsing="false" onAction="#btnContinueClick" prefHeight="48.0" prefWidth="256.0" style="-fx-background-color: transparent; -fx-border-color: #1B0840; -fx-border-width: 4px; -fx-text-fill: #1B0840;" stylesheets="@../Style.css" text="CONTINUE" BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets top="40.0" />
+                  <Insets bottom="40.0" top="40.0" />
                </BorderPane.margin>
             </Button>
          </bottom>
+         <top>
+            <Button fx:id="btnBack" mnemonicParsing="false" onAction="#btnBackClick" prefHeight="50.0" prefWidth="125.0" style="-fx-background-image: '@/images/back.png'; -fx-border-color: #1B0840; -fx-background-color: transparent; -fx-text-fill: #1B0840; -fx-border-width: 4px;" text="Back" BorderPane.alignment="TOP_LEFT">
+               <BorderPane.margin>
+                  <Insets left="15.0" top="15.0" />
+               </BorderPane.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+         </top>
       </BorderPane>
   </children>
 </VBox>
