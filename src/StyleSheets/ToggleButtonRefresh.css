@@ -1,0 +1,10 @@
+.toggle-button {
+    -fx-graphic: url('../images/reload.png');
+    -fx-min-height: 50;
+    -fx-max-height: 50;
+    -fx-min-width: 128;
+    -fx-max-width: 128;
+    -fx-background-color: transparent;
+    -fx-border-width: 4px;
+    -fx-border-color: #1B0840;
+}

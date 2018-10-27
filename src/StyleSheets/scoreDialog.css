@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Abel';
+    src: url('Font/abel-regular.ttf');
+}
+
+.scoreDialog{
+    background-color: #FFAD5B;
+}
+
+.scoreDialog > *.label.content{
+    -fx-font-family: "Abel";
+}

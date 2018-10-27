@@ -1,0 +1,6 @@
+.combo-box .list-cell{
+    -fx-background-color: transparent;
+    -fx-border-color: #FFAD5B;
+    -fx-text-fill: #FFAD5B;
+    -fx-border-width: 4px;
+}

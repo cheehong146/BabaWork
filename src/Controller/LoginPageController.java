@@ -6,10 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -25,8 +23,8 @@ import java.util.regex.Pattern;
 
 public class LoginPageController extends Navigation implements Initializable {
 
-    int SCORE_DIALOG_WIDTH = 500;
-    int SCORE_DIALOG_HEIGHT = 300;
+    int SCORE_DIALOG_WIDTH = 800;
+    int SCORE_DIALOG_HEIGHT = 500;
 
     @FXML
     private Button btnLogin;
@@ -41,9 +39,9 @@ public class LoginPageController extends Navigation implements Initializable {
     @FXML
     private PasswordField txtPassword;
     @FXML
-    private Button btnBack;
+    private ToggleButton btnBack;
     @FXML
-    private Button btnRetry;
+    private ToggleButton btnRetry;
 
     private String url = "https://badssl.com/";
     private int totPoints;
@@ -68,8 +66,26 @@ public class LoginPageController extends Navigation implements Initializable {
         dialog.initModality(Modality.APPLICATION_MODAL);
         VBox dialogVbox = new VBox(20);
         dialogVbox.setAlignment(Pos.CENTER);
-        dialogVbox.getChildren().add(new Text("YOU HAVE SCORED " + totPoints + " POINTS"));
-        dialogVbox.getChildren().add(new Text("Click on the link below to know how to create a strong password"));
+
+        Text txtPreScore = new Text("YOU HAVE SCORED");
+        Text txtScore = new Text(String.valueOf(totPoints));
+        Text txtPostScore = new Text(" POINTS");
+        Text txtLinkInfo = new Text("Click on the link below to know how to create a strong password");
+        txtLinkInfo.setStyle("-fx-text-fill: #FF5959");
+
+        txtPreScore.setStyle("-fx-font-family: Abel; -fx-text-fill: #393D46; -fx-font-size: 24px");
+        txtPostScore.setStyle("-fx-font-family: Abel; -fx-text-fill: #393D46; -fx-font-size: 24px;");
+        txtScore.setStyle("-fx-font-family: Abel; -fx-text-fill: #4C9DA6; -fx-font-size: 24px;");
+        txtLinkInfo.setStyle("-fx-font-family: Abel; -fx-text-fill: #4C9DA6; -fx-font-size: 18px;");
+
+        HBox scoreHBox = new HBox(txtScore, txtPostScore);
+        scoreHBox.setAlignment(Pos.CENTER);
+
+        dialogVbox.getChildren().add(txtPreScore);
+        dialogVbox.getChildren().add(scoreHBox);
+        dialogVbox.getChildren().add(txtLinkInfo);
+        dialogVbox.setStyle("-fx-background-color: #FFAD5B");
+
 
         Hyperlink strongPasswordLink = new Hyperlink();
         strongPasswordLink.setText("Click Here");
@@ -88,8 +104,9 @@ public class LoginPageController extends Navigation implements Initializable {
     }
 
     @FXML
-    private void btnRetryClick (ActionEvent actionEvent){
-
+    private void btnRetryPressed (ActionEvent actionEvent){
+        closeCurScene(actionEvent);
+        loadStage("/Fxml/LoginPage.fxml", actionEvent);
     }
 
     @FXML
@@ -99,9 +116,9 @@ public class LoginPageController extends Navigation implements Initializable {
     }
 
     @FXML
-    private void btnBackClick(ActionEvent actionEvent){
+    private void btnBackPressed(ActionEvent actionEvent){
         closeCurScene(actionEvent);
-        loadStage("/Fxml/SimulationChoicePage.fxml", actionEvent);
+        loadStage("/Fxml/MenuPage.fxml", actionEvent);
     }
 
     private int calcPointByUrl(String url){
@@ -158,7 +175,7 @@ public class LoginPageController extends Navigation implements Initializable {
         conn.connect();
         Certificate[] certs = conn.getServerCertificates();
         for (Certificate cert : certs) {
-            System.out.println("Certificate is: " + cert);
+//            System.out.println("Certificate is: " + cert);
             if(cert instanceof X509Certificate) {
                 //If you want the ssl cert specification uncomment this and use x
 //                X509Certificate x = (X509Certificate ) cert;

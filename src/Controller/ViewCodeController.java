@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,7 +14,7 @@ import java.util.ResourceBundle;
 public class ViewCodeController extends Navigation implements Initializable {
 
     @FXML
-    Button btnBack;
+    ToggleButton btnBack;
     @FXML
     Button btnContinue;
     @FXML

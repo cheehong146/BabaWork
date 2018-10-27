@@ -15,47 +15,45 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginPageController">
+<?import javafx.scene.control.ToggleButton?>
+<VBox prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #F8F6F7;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginPageController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <BorderPane layoutX="-80.0" layoutY="-31.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <center>
-                  <VBox BorderPane.alignment="CENTER">
+                  <VBox alignment="TOP_CENTER" spacing="15.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane prefWidth="200.0">
-                           <children>
-                              <ImageView id="img_logo" fitHeight="450.0" fitWidth="450.0" layoutX="395.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="14.0">
-                                 <image>
-                                    <Image url="@/images/logo.png" />
-                                 </image>
-                                 <viewport>
-                                    <Rectangle2D />
-                                 </viewport>
-                              </ImageView>
-                              <VBox alignment="CENTER" maxHeight="-Infinity" minWidth="-Infinity" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="300.0">
-                                 <children>
-                                    <TextField id="txt_username" fx:id="txtUsername" promptText="USERNAME" style="-fx-alignment: center; -fx-faint-focus-color: transparent; -fx-text-box-border: transparent; -fx-focus-color: transparent;">
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </TextField>
-                                    <PasswordField id="txt_password" fx:id="txtPassword" promptText="PASSWORD" style="-fx-alignment: center; -fx-text-box-border: transparent; -fx-focus-color: transparent;">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font></PasswordField>
-                                    <Button id="btn_login" fx:id="btnLogin" mnemonicParsing="false" onAction="#btnLoginClick" text="LOGIN">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font></Button>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
+                        <ImageView id="img_logo" fitHeight="260.0" fitWidth="562.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/images/logo.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                        <TextField id="txt_username" fx:id="txtUsername" promptText="USERNAME" stylesheets="@../StyleSheets/LoginTextField.css">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </TextField>
+                        <PasswordField id="txt_password" fx:id="txtPassword" promptText="PASSWORD" stylesheets="@../StyleSheets/LoginTextField.css">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </PasswordField>
+                        <Button id="btn_login" fx:id="btnLogin" mnemonicParsing="false" onAction="#btnLoginClick" prefWidth="150.0" style="-fx-background-color: transparent; -fx-border-width: 4px; -fx-border-color: #4C9DA6; -fx-text-fill: #4C9DA6;" stylesheets="@../StyleSheets/buttonAbel.css" text="LOGIN">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
                      </children>
+                     <BorderPane.margin>
+                        <Insets left="400.0" right="400.0" />
+                     </BorderPane.margin>
                   </VBox>
                </center>
                <padding>
@@ -64,18 +62,18 @@
                <bottom>
                   <AnchorPane prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Hyperlink id="hl_register" fx:id="hlRegister" text="Register?" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <Hyperlink id="hl_register" fx:id="hlRegister" style="-fx-text-fill: #393D46;" stylesheets="@../StyleSheets/hyperlinkHover.css" text="Register?" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Hyperlink>
                         <VBox prefHeight="69.0" prefWidth="82.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                            <children>
-                              <Button id="btn_points" fx:id="btnScore" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnScoreClick" text="SCORE">
+                              <Button id="btn_points" fx:id="btnScore" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnScoreClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: transparent; -fx-border-color: #FF5959; -fx-text-fill: #FF5959; -fx-border-width: 4px;" stylesheets="@../StyleSheets/buttonAbel.css" text="SCORE">
                                  <font>
                                     <Font size="24.0" />
                                  </font></Button>
-                              <Button id="btn_code" fx:id="btnCode" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" text="VIEW CODE" onAction="#btnViewCodeClick">
+                              <Button id="btn_code" fx:id="btnCode" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#btnViewCodeClick" style="-fx-background-color: transparent; -fx-border-color: #FF5959; -fx-border-width: 4px; -fx-text-fill: #FF5959;" stylesheets="@../StyleSheets/buttonAbel.css" text="VIEW CODE">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -94,9 +92,9 @@
                <top>
                   <HBox minHeight="-Infinity" prefHeight="64.0" spacing="25.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="btnBack" mnemonicParsing="false" onAction="#btnBackClick" prefHeight="48.0" prefWidth="48.0" text="Back" />
-                        <Button fx:id="btnRetry" mnemonicParsing="false" onAction="#btnRetryClick" prefHeight="48.0" prefWidth="48.0" text="Refresh" />
-                        <ComboBox fx:id="ddlUrl" prefHeight="48.0" prefWidth="1100.0">
+                        <ToggleButton fx:id="btnBack" stylesheets="@../StyleSheets/ToggleButtonBack.css" onAction="#btnBackPressed"></ToggleButton>
+                        <ToggleButton fx:id="btnRetry" stylesheets="@../StyleSheets/ToggleButtonRefresh.css" onAction="#btnRetryPressed"></ToggleButton>
+                        <ComboBox fx:id="ddlUrl" prefHeight="48.0" prefWidth="1100.0" stylesheets="@../StyleSheets/LoginUrlComboBox.css">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>

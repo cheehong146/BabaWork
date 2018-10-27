@@ -1,0 +1,6 @@
+urllib.request.install_opener(opener)
+parsed_html = BruteParser()
+parsed_html.feed(page)
+brute_force_parsed_html = BruteParser()
+brute_force_parsed_html.feed(brute_force_page)
+html_brute_forcer_thread = threading.Thread(target=self.html_brute_forcer)

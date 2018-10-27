@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #1B0840;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SimulationChoiceController">
+<VBox prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #1B0840;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -20,12 +20,12 @@
                               <Font size="48.0" />
                            </font>
                         </Label>
-                        <Button id="btnEPayment" fx:id="btnEPayment" mnemonicParsing="false" onAction="#btnEPaymentClick" prefHeight="80.0" prefWidth="240.0" style="-fx-text-fill: #FAFCCB; -fx-background-color: transparent; -fx-border-color: #FFAD5B; -fx-border-width: 4px; -fx-font-weight: bold;" stylesheets="@../Style.css" text="E-PAYMENT">
+                        <Button id="btnEPayment" fx:id="btnEPayment" mnemonicParsing="false" onAction="#btnEPaymentClick" prefHeight="80.0" prefWidth="240.0" style="-fx-text-fill: #FAFCCB; -fx-background-color: transparent; -fx-border-color: #FFAD5B; -fx-border-width: 4px; -fx-font-weight: bold;" stylesheets="@../StyleSheets/buttonAbel.css" text="E-PAYMENT">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Button>
-                        <Button id="btnWebsite" fx:id="btnWebsite" mnemonicParsing="false" onAction="#btnWebsiteClick" prefHeight="80.0" prefWidth="240.0" style="-fx-text-fill: #FAFCCB; -fx-border-width: 4px; -fx-background-color: transparent; -fx-border-color: #FFAD5B;" stylesheets="@../Style.css" text="WEBSITE">
+                        <Button id="btnWebsite" fx:id="btnWebsite" mnemonicParsing="false" onAction="#btnWebsiteClick" prefHeight="80.0" prefWidth="240.0" style="-fx-text-fill: #FAFCCB; -fx-border-width: 4px; -fx-background-color: transparent; -fx-border-color: #FFAD5B;" stylesheets="@../StyleSheets/buttonAbel.css" text="WEBSITE">
                            <font>
                               <Font size="30.0" />
                            </font>

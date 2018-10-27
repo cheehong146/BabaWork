@@ -1,9 +1,9 @@
 @font-face {
     font-family: 'Abel';
-    src: url('Font/abel-regular.ttf');
+    src: url('../Font/abel-regular.ttf');
 }
 
-.text, .label, .button {
+.button {
     -fx-font-family: "Abel";
     -fx-font-size: 30px;
 }
