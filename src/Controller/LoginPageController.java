@@ -135,7 +135,7 @@ public class LoginPageController extends Navigation implements Initializable {
     private int calcPointByUrl(){
         int points = 0;
         try {
-            String selectedItem = ddlUrl.getSelectionModel().getSelectedItem().toString();//TODO
+            String selectedItem = ddlUrl.getSelectionModel().getSelectedItem().toString();
             if(selectedItem.substring(0, 5).equals("https")){
                 points = 5;
             }else if (selectedItem.substring(0, ICON_IDENTIFIER.length()).equals(ICON_IDENTIFIER)){
@@ -197,7 +197,7 @@ public class LoginPageController extends Navigation implements Initializable {
                     ImageView imageView = new ImageView(image);
                     imageView.setFitHeight(16);
                     imageView.setFitWidth(16);
-                    Label lbl = new Label(item.substring(ICON_IDENTIFIER.length(), item.length()));
+                    Label lbl = new Label(item.substring(ICON_IDENTIFIER.length()));
                     lbl.setStyle("-fx-text-fill: BLACK;");
                     HBox hBox = new HBox(imageView, lbl);
                     hBox.setAlignment(Pos.CENTER_LEFT);
