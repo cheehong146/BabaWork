@@ -1,5 +1,6 @@
 package Controller;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -7,24 +8,27 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.net.ssl.HttpsURLConnection;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginPageController extends Navigation implements Initializable {
 
-    int SCORE_DIALOG_WIDTH = 800;
-    int SCORE_DIALOG_HEIGHT = 500;
+    private int SCORE_DIALOG_WIDTH = 800;
+    private int SCORE_DIALOG_HEIGHT = 500;
+    private String URL_LOCK_ICON_LOC = "images/lock.png";
+    private String ICON_IDENTIFIER = ":lock:";
 
     @FXML
     private Button btnLogin;
@@ -42,20 +46,27 @@ public class LoginPageController extends Navigation implements Initializable {
     private ToggleButton btnBack;
     @FXML
     private ToggleButton btnRetry;
+    @FXML
+    private ComboBox ddlUrl;
 
-    private String url = "https://badssl.com/";
     private int totPoints;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+            String notSecureUrl = "http://www.authcube.com";
+            String semiSecureUrl = "https://www.authcube.com";
+            String secureUrl = ICON_IDENTIFIER + "https://www.authcube.com";
 
+            ddlUrl.setItems(FXCollections.observableArrayList(notSecureUrl, semiSecureUrl, secureUrl));
+            ddlUrl.setCellFactory(param -> new UrlListCell());
+            ddlUrl.setButtonCell(new UrlListCell());
     }
 
     @FXML
     private void btnLoginClick(ActionEvent actionEvent) {
         System.out.println(txtUsername.getText() + ", " + txtPassword.getText());
         totPoints = calcPointByPassword(txtPassword.getText());
-        totPoints += calcPointByUrl(url);
+        totPoints += calcPointByUrl();
         System.out.println("Total Points: " + totPoints);
     }
 
@@ -121,13 +132,19 @@ public class LoginPageController extends Navigation implements Initializable {
         loadStage("/Fxml/MenuPage.fxml", actionEvent);
     }
 
-    private int calcPointByUrl(String url){
+    private int calcPointByUrl(){
         int points = 0;
         try {
-            points += isCertValid(url)? 10: 0;
+            String selectedItem = ddlUrl.getSelectionModel().getSelectedItem().toString();//TODO
+            if(selectedItem.substring(0, 5).equals("https")){
+                points = 5;
+            }else if (selectedItem.substring(0, ICON_IDENTIFIER.length()).equals(ICON_IDENTIFIER)){
+                points = 10;
+            }
         }catch (Exception e){
             System.out.println("SSL Cert not valid");
         }
+        System.out.println("Points by URL: " + points);//TODO REMOVE IF DONT WANT
         return  points;
     }
 
@@ -168,21 +185,32 @@ public class LoginPageController extends Navigation implements Initializable {
         return points;
     }
 
-    //check if ssl cert is valid, will throw exception when it's self-signed, expired, or doesn't have one
-    public boolean isCertValid(String aURL) throws Exception{
-        URL destinationURL = new URL(aURL);
-        HttpsURLConnection conn = (HttpsURLConnection) destinationURL.openConnection();
-        conn.connect();
-        Certificate[] certs = conn.getServerCertificates();
-        for (Certificate cert : certs) {
-//            System.out.println("Certificate is: " + cert);
-            if(cert instanceof X509Certificate) {
-                //If you want the ssl cert specification uncomment this and use x
-//                X509Certificate x = (X509Certificate ) cert;
-//                System.out.println(x.getIssuerDN().toString());
-                return true;
+    class UrlListCell extends ListCell<String> {
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item == null || empty)
+                setGraphic(null);
+            else {
+                if(item.substring(0, ICON_IDENTIFIER.length()).equals(ICON_IDENTIFIER)) {
+                    Image image = new Image(URL_LOCK_ICON_LOC);
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(16);
+                    imageView.setFitWidth(16);
+                    Label lbl = new Label(item.substring(ICON_IDENTIFIER.length(), item.length()));
+                    lbl.setStyle("-fx-text-fill: BLACK;");
+                    HBox hBox = new HBox(imageView, lbl);
+                    hBox.setAlignment(Pos.CENTER_LEFT);
+                    setGraphic(hBox);
+                }else{
+                    Label lbl = new Label(item);
+                    lbl.setStyle("-fx-text-fill: BLACK;");
+                    setGraphic(lbl);
+                }
             }
+
+            setText("");
         }
-        return false;
+
     }
 }

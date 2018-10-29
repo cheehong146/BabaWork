@@ -13,10 +13,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -35,7 +32,7 @@ public class SimulationPageController extends Navigation implements Initializabl
     private String PYTHON_FILELOC = "C:\\Users\\moonl\\OneDrive\\Documents\\BabaWork\\BabaWork\\src\\BruteForceCode\\pythonBruteForce.txt";
     private String BLANK_ANSWER_SPACE = "_______________________________________________";
     private int SCORE_DIALOG_WIDTH = 800;
-    private int SCORE_DIALOG_HEIGHT = 500;
+    private int SCORE_DIALOG_HEIGHT = 400;
 
     @FXML
     private ToggleButton btnBack;
@@ -63,18 +60,6 @@ public class SimulationPageController extends Navigation implements Initializabl
         readTextFromFileAndAppendToPane(vBoxHtml, HTML_FILELOC);
         readTextFromFileAndAppendToPane(vBoxPython, PYTHON_FILELOC);
 
-//        final ToggleButton toggle = new ToggleButton();
-//        toggle.getStylesheets().add(this.getClass().getResource(
-//                "imagetogglebutton.css"
-//        ).toExternalForm());
-//        toggle.setMinSize(148, 148); toggle.setMaxSize(148, 148);
-//        stage.setScene(new Scene(
-//                StackPaneBuilder.create()
-//                        .children(toggle)
-//                        .style("-fx-padding:10; -fx-background-color: cornsilk;")
-//                        .build()
-//        ));
-//        stage.show();
         for (Label answer:  //populate the right container with answer label with event and style
              mapLblAnswer.values()) {
             answer.setWrapText(true);
@@ -135,7 +120,7 @@ public class SimulationPageController extends Navigation implements Initializabl
 
                     sbBlankAnswer.append(BLANK_ANSWER_SPACE);
                     Label lblAnswerBlank = new Label(sbBlankAnswer.toString());
-                    lblAnswerBlank.setStyle("-fx-text-fill: BLUE");
+                    lblAnswerBlank.setStyle("-fx-text-fill: #4C9DA6");
                     lblAnswerBlank.setUserData(lineCount + "," +lineWithoutTab);
 
                     lblAnswerBlank.setOnDragOver(event -> {     //drag-over Event for the blank label
@@ -190,11 +175,14 @@ public class SimulationPageController extends Navigation implements Initializabl
     }
     @FXML
     private void btnRunCodePressed(ActionEvent actionEvent){
+        showScoreDialog(actionEvent);
+    }
+
+    private void showScoreDialog(ActionEvent actionEvent){
         final Stage dialog = new Stage();
         dialog.setResizable(false);
         dialog.initModality(Modality.APPLICATION_MODAL);
-        VBox dialogVbox = new VBox(20);
-        dialogVbox.setAlignment(Pos.CENTER);
+        BorderPane dialogBorderPane = new BorderPane();
 
         Text txtPreScore = new Text("YOU HAVE SCORED");
         Text txtScore = new Text(String.valueOf(getNumberOfCorrectAnswer()));
@@ -209,36 +197,34 @@ public class SimulationPageController extends Navigation implements Initializabl
 
         HBox scoreHBox = new HBox(txtScore, txtPostScore);
         scoreHBox.setAlignment(Pos.CENTER);
+        Hyperlink bruteForceAttackLink = new Hyperlink();
+        bruteForceAttackLink.setText("Click Here");
 
         Button btnMainMenu = new Button("MAIN MENU");
-//        btnMainMenu.setAlignment(Pos.BASELINE_RIGHT);
         btnMainMenu.setOnMouseClicked(event -> {
             dialog.close();
             closeCurScene(actionEvent);
             loadStage("/Fxml/MenuPage.fxml", actionEvent);
         });
 
-        dialogVbox.getChildren().add(txtPreScore);
-        dialogVbox.getChildren().add(scoreHBox);
-        dialogVbox.getChildren().add(txtLinkInfo);
-        dialogVbox.setStyle("-fx-background-color: #FFAD5B");
-
-        Hyperlink bruteForceAttackLink = new Hyperlink();
-        bruteForceAttackLink.setText("Click Here");
-        dialogVbox.getChildren().add(bruteForceAttackLink);
+        VBox centerVbox = new VBox(txtPreScore, scoreHBox, txtLinkInfo, bruteForceAttackLink);
+        centerVbox.setAlignment(Pos.CENTER);
+        centerVbox.setPadding(new Insets(50, 20, 50, 20));
+        centerVbox.setSpacing(5);
+        dialogBorderPane.setTop(centerVbox);
+        dialogBorderPane.setStyle("-fx-background-color: #FFAD5B");
 
         HBox btnPaneContainer = new HBox();
         btnPaneContainer.setAlignment(Pos.BOTTOM_RIGHT);
         btnPaneContainer.setPadding(new Insets(5, 5, 5, 5));
-        btnPaneContainer.minWidth(dialogVbox.getWidth());
+        btnPaneContainer.minWidth(dialogBorderPane.getWidth());
         btnPaneContainer.getChildren().add(btnMainMenu);
-        dialogVbox.getChildren().add(btnPaneContainer);
+        dialogBorderPane.setBottom(btnPaneContainer);
 
 
-        Scene dialogScene = new Scene(dialogVbox, SCORE_DIALOG_WIDTH, SCORE_DIALOG_HEIGHT);
+        Scene dialogScene = new Scene(dialogBorderPane, SCORE_DIALOG_WIDTH, SCORE_DIALOG_HEIGHT);
         dialog.setScene(dialogScene);
-        dialog.show();
-    }
+        dialog.show();}
 
     @FXML
     private void btnExitPressed(ActionEvent actionEvent) {

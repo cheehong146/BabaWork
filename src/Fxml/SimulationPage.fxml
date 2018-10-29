@@ -24,11 +24,11 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" spacing="15.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="btnRunCode" mnemonicParsing="false" onAction="#btnRunCodePressed" prefHeight="50.0" prefWidth="150.0" text="RUN CODE">
+                  <Button fx:id="btnRunCode" mnemonicParsing="false" onAction="#btnRunCodePressed" prefHeight="50.0" prefWidth="150.0" text="RUN CODE" style="-fx-border-color: #FF5959; -fx-text-fill: #FF5959; -fx-background-color: transparent; -fx-border-width: 3px;">
                      <HBox.margin>
                         <Insets bottom="15.0" top="15.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="btnExit" mnemonicParsing="false" onAction="#btnExitPressed" prefHeight="50.0" prefWidth="150.0" text="EXIT SIMULATION">
+                  <Button fx:id="btnExit" mnemonicParsing="false" onAction="#btnExitPressed" prefHeight="50.0" prefWidth="150.0" text="EXIT SIMULATION" style="-fx-border-color: #FFAD5B; -fx-text-fill: #FFAD5B; -fx-background-color: transparent; -fx-border-width: 3px;">
                      <HBox.margin>
                         <Insets bottom="15.0" right="15.0" top="15.0" />
                      </HBox.margin></Button>
@@ -42,14 +42,14 @@
                <children>
                   <SplitPane dividerPositions="0.25" orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <items>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" stylesheets="@../StyleSheets/SimulationPage.css">
                            <content>
-                              <VBox fx:id="vBoxHtml" fillWidth="false" minWidth="-Infinity" onDragDropped="#vBoxHtmlDragDrop" onDragOver="#vBoxHtmlDragOver" />
+                              <VBox fx:id="vBoxHtml" onDragDropped="#vBoxHtmlDragDrop" onDragOver="#vBoxHtmlDragOver" stylesheets="@../StyleSheets/SimulationPage.css"/>
                            </content>
                         </ScrollPane>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                        <ScrollPane  stylesheets="@../StyleSheets/SimulationPage.css">
                            <content>
-                              <VBox fx:id="vBoxPython"/>
+                              <VBox fx:id="vBoxPython" stylesheets="@../StyleSheets/SimulationPage.css"/>
                            </content>
                         </ScrollPane>
                      </items>
@@ -58,7 +58,7 @@
             </AnchorPane>
             <ScrollPane fitToWidth="true" prefHeight="1080.0" SplitPane.resizableWithParent="false">
                <content>
-                  <VBox fx:id="vBoxAnswerContainer" alignment="CENTER" prefWidth="300.0" spacing="25.0">
+                  <VBox fx:id="vBoxAnswerContainer" alignment="CENTER" prefWidth="300.0" spacing="25.0" style="-fx-background-color: #F8F6F7;">
                      <children></children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
