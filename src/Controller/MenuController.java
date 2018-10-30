@@ -12,7 +12,7 @@ public class MenuController extends Navigation{
     private Button btnWebsite;
 
     @FXML
-    private void btnEPaymentClick(ActionEvent actionEvent){
+    private void btnEPaymentClick(ActionEvent actionEvent){//navigate to Ian's part
 
     }
 

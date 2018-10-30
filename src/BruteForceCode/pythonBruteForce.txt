@@ -93,8 +93,6 @@ class BruteForcer():
 			html_brute_forcer_thread = threading.Thread(target=self.html_brute_forcer)
 			html_brute_forcer_thread.start()
 
-///
-
 class BruteParser(HTMLParser):
 	def _init_(self):
 		HTMLParser._init_(self)

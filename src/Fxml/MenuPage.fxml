@@ -13,7 +13,7 @@
       <children>
             <BorderPane layoutX="142.0" layoutY="27.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <center>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" style="-fx-background-color: #1B0H40;" BorderPane.alignment="CENTER">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" stylesheets="@../StyleSheets/TextAreaBox.css" BorderPane.alignment="CENTER">
                      <children>
                         <Label style="-fx-text-fill: #F8F6F7;" text="PICK A SIMULATION" textAlignment="CENTER">
                            <font>

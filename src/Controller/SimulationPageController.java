@@ -49,9 +49,8 @@ public class SimulationPageController extends Navigation implements Initializabl
     @FXML
     private VBox vBoxAnswerContainer;
 
-    private List<String> listAnswers;
-    private Map<Integer ,Label> mapLblAnswer;
-
+    private List<String> listAnswers;//read from answer.txt
+    private Map<Integer ,Label> mapLblAnswer;// contain lineNumber and the text of the line, ex. 20. print("Tester")
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,7 +59,7 @@ public class SimulationPageController extends Navigation implements Initializabl
         readTextFromFileAndAppendToPane(vBoxHtml, HTML_FILELOC);
         readTextFromFileAndAppendToPane(vBoxPython, PYTHON_FILELOC);
 
-        for (Label answer:  //populate the right container with answer label with event and style
+        for (Label answer:  //populate the right side with answer label with drag-n-drop event and styling
              mapLblAnswer.values()) {
             answer.setWrapText(true);
             answer.setPadding(new Insets(5, 5, 5, 5));
@@ -78,7 +77,7 @@ public class SimulationPageController extends Navigation implements Initializabl
 
     }
 
-    private int getNumberOfCorrectAnswer(){
+    private int getNumberOfCorrectAnswer(){//return the number of correctly drag-n-drop user input
         int correct = 0;
         Pattern pattern = Pattern.compile("([\"'])(\\\\?.)*?\\1");//get label text from node
         Matcher m = pattern.matcher(vBoxPython.getChildren().toString());
@@ -86,10 +85,10 @@ public class SimulationPageController extends Navigation implements Initializabl
         while(m.find()){
             String line = m.group(0).replace("'", "");
             line = line.replace("\t", "");
-            if(mapLblAnswer.keySet().contains(lineCount)){
+            if(mapLblAnswer.keySet().contains(lineCount)){//check if the line(label) number is the answer line
                 System.out.println("Matches: " + line);
                 System.out.println("Matches: " + mapLblAnswer.get(lineCount).getText());
-                if(mapLblAnswer.get(lineCount).getText().equals(line)){
+                if(mapLblAnswer.get(lineCount).getText().equals(line)){//check if user answer is the same as the given answer
                     System.out.println("Matches: " + line);
                     correct++;
                 }
@@ -99,6 +98,7 @@ public class SimulationPageController extends Navigation implements Initializabl
         return correct;
     }
 
+    //read from a text file and populate the Vbox pane with label for each line in the text file
     private void readTextFromFileAndAppendToPane (VBox pane, String fileName){
         try{
             Scanner sc = new Scanner(new File(fileName));
@@ -148,7 +148,7 @@ public class SimulationPageController extends Navigation implements Initializabl
 
     }
 
-    private List<String> getAnswerFromFile(){
+    private List<String> getAnswerFromFile(){//populate the lis with lines from answer.txt
         List<String> listStr = new ArrayList<>();
         try{
             Scanner sc = new Scanner(new File(ANSWER_FILELOC));
@@ -178,7 +178,7 @@ public class SimulationPageController extends Navigation implements Initializabl
         showScoreDialog(actionEvent);
     }
 
-    private void showScoreDialog(ActionEvent actionEvent){
+    private void showScoreDialog(ActionEvent actionEvent){//pop-up a score dialog to show score based on user drag-n-drop input
         final Stage dialog = new Stage();
         dialog.setResizable(false);
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -221,10 +221,10 @@ public class SimulationPageController extends Navigation implements Initializabl
         btnPaneContainer.getChildren().add(btnMainMenu);
         dialogBorderPane.setBottom(btnPaneContainer);
 
-
         Scene dialogScene = new Scene(dialogBorderPane, SCORE_DIALOG_WIDTH, SCORE_DIALOG_HEIGHT);
         dialog.setScene(dialogScene);
-        dialog.show();}
+        dialog.show();
+    }
 
     @FXML
     private void btnExitPressed(ActionEvent actionEvent) {

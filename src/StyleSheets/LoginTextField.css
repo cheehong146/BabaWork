@@ -5,7 +5,7 @@
     -fx-prompt-text-fill: #4C9DA6;
     -fx-background-insets: 0, 0 0 1 0 ;
     -fx-background-radius: 0 ;
-    -fx-border-image-insets: #4C9DA6;
+    /*-fx-border-image-insets: #4C9DA6;*/
 
 }
 

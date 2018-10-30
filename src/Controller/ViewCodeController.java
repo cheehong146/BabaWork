@@ -17,13 +17,9 @@ public class ViewCodeController extends Navigation implements Initializable {
     ToggleButton btnBack;
     @FXML
     Button btnContinue;
-    @FXML
-    TextArea txtAreaContents;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        txtAreaContents.setText("BLA BLA BLA BLA BLALSDPADOIHAUSDGUIAGSDUAHYISDVIADS");
     }
 
     @FXML

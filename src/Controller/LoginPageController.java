@@ -53,17 +53,20 @@ public class LoginPageController extends Navigation implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-            String notSecureUrl = "http://www.authcube.com";
-            String semiSecureUrl = "https://www.authcube.com";
-            String secureUrl = ICON_IDENTIFIER + "https://www.authcube.com";
 
-            ddlUrl.setItems(FXCollections.observableArrayList(notSecureUrl, semiSecureUrl, secureUrl));
-            ddlUrl.setCellFactory(param -> new UrlListCell());
-            ddlUrl.setButtonCell(new UrlListCell());
+        //initialize URL combobox data and populate it
+        String notSecureUrl = "http://www.authcube.com";
+        String semiSecureUrl = "https://www.authcube.com";
+        String secureUrl = ICON_IDENTIFIER + "https://www.authcube.com";
+
+        ddlUrl.getSelectionModel().selectFirst(); //Select 1st value as default
+        ddlUrl.setItems(FXCollections.observableArrayList(notSecureUrl, semiSecureUrl, secureUrl));
+        ddlUrl.setCellFactory(param -> new UrlListCell());
+        ddlUrl.setButtonCell(new UrlListCell());
     }
 
     @FXML
-    private void btnLoginClick(ActionEvent actionEvent) {
+    private void btnLoginClick(ActionEvent actionEvent) { //calculate password and url points and print out the total
         System.out.println(txtUsername.getText() + ", " + txtPassword.getText());
         totPoints = calcPointByPassword(txtPassword.getText());
         totPoints += calcPointByUrl();
@@ -71,7 +74,7 @@ public class LoginPageController extends Navigation implements Initializable {
     }
 
     @FXML
-    private void btnScoreClick(ActionEvent actionEvent) {
+    private void btnScoreClick(ActionEvent actionEvent) {//pop-up a dialog box, containing tot_score
         final Stage dialog = new Stage();
         dialog.setResizable(false);
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -97,7 +100,6 @@ public class LoginPageController extends Navigation implements Initializable {
         dialogVbox.getChildren().add(txtLinkInfo);
         dialogVbox.setStyle("-fx-background-color: #FFAD5B");
 
-
         Hyperlink strongPasswordLink = new Hyperlink();
         strongPasswordLink.setText("Click Here");
         dialogVbox.getChildren().add(strongPasswordLink);
@@ -115,7 +117,7 @@ public class LoginPageController extends Navigation implements Initializable {
     }
 
     @FXML
-    private void btnRetryPressed (ActionEvent actionEvent){
+    private void btnRetryPressed (ActionEvent actionEvent){//refresh the page
         closeCurScene(actionEvent);
         loadStage("/Fxml/LoginPage.fxml", actionEvent);
     }
@@ -134,28 +136,31 @@ public class LoginPageController extends Navigation implements Initializable {
 
     private int calcPointByUrl(){
         int points = 0;
-        try {
-            String selectedItem = ddlUrl.getSelectionModel().getSelectedItem().toString();
-            if(selectedItem.substring(0, 5).equals("https")){
-                points = 5;
-            }else if (selectedItem.substring(0, ICON_IDENTIFIER.length()).equals(ICON_IDENTIFIER)){
-                points = 10;
-            }
-        }catch (Exception e){
-            System.out.println("SSL Cert not valid");
+        String selectedItem = ddlUrl.getSelectionModel().getSelectedItem().toString();//get the user selected url combo-box
+        if(selectedItem.substring(0, 5).equals("https")){//if https without lock icon, +5 point
+            points = 5;
+        }else if (selectedItem.substring(0, ICON_IDENTIFIER.length()).equals(ICON_IDENTIFIER)){//else if https with lock icon, +10 point
+            points = 10;
         }
-        System.out.println("Points by URL: " + points);//TODO REMOVE IF DONT WANT
+        System.out.println("Points by URL: " + points);
         return  points;
     }
 
     private int calcPointByPassword(String pass){
+        /*criteria of point for password strength rule, if matches rules +x Points, else +0 points
+        +10 points, for length if 8 and above
+        +10 points, if got lowercase
+        +10 points, if got uppercase
+        +10 points, if got digits
+        +10 points, if got symbol
+        */
         int points = 0;
         boolean lowercaseFlag = false;
         boolean uppercaseFlag = false;
         boolean numberFlag = false;
         String regexSymbol = "[:?!@#$%^&*()]";
 
-        if (pass.length() >= 8)//I Assume is 8 charac and above?
+        if (pass.length() >= 8)//pass length check
             points += 10;
 
         char [] chPass = pass.toCharArray();
@@ -185,7 +190,7 @@ public class LoginPageController extends Navigation implements Initializable {
         return points;
     }
 
-    class UrlListCell extends ListCell<String> {
+    class UrlListCell extends ListCell<String> {//custom class for the combo-bos URL since got icon, we need to create our own ListCell
         @Override
         protected void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
@@ -208,7 +213,6 @@ public class LoginPageController extends Navigation implements Initializable {
                     setGraphic(lbl);
                 }
             }
-
             setText("");
         }
 
