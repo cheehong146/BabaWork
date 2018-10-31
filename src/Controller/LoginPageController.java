@@ -29,6 +29,7 @@ public class LoginPageController extends Navigation implements Initializable {
     private int SCORE_DIALOG_HEIGHT = 500;
     private String URL_LOCK_ICON_LOC = "images/lock.png";
     private String ICON_IDENTIFIER = ":lock:";
+    private String MAX_SCORE = "70";
 
     @FXML
     private Button btnLogin;
@@ -83,7 +84,7 @@ public class LoginPageController extends Navigation implements Initializable {
 
         Text txtPreScore = new Text("YOU HAVE SCORED");
         Text txtScore = new Text(String.valueOf(totPoints));
-        Text txtPostScore = new Text(" POINTS");
+        Text txtPostScore = new Text(" POINTS OUT OF " + MAX_SCORE + " POINTS");
         Text txtLinkInfo = new Text("Click on the link below to know how to create a strong password");
         txtLinkInfo.setStyle("-fx-text-fill: #FF5959");
 
