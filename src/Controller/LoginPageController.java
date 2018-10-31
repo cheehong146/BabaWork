@@ -29,7 +29,7 @@ public class LoginPageController extends Navigation implements Initializable {
     private int SCORE_DIALOG_HEIGHT = 500;
     private String URL_LOCK_ICON_LOC = "images/lock.png";
     private String ICON_IDENTIFIER = ":lock:";
-    private String MAX_SCORE = "70";
+    private String MAX_SCORE = "60";
 
     @FXML
     private Button btnLogin;
@@ -60,10 +60,11 @@ public class LoginPageController extends Navigation implements Initializable {
         String semiSecureUrl = "https://www.authcube.com";
         String secureUrl = ICON_IDENTIFIER + "https://www.authcube.com";
 
-        ddlUrl.getSelectionModel().selectFirst(); //Select 1st value as default
         ddlUrl.setItems(FXCollections.observableArrayList(notSecureUrl, semiSecureUrl, secureUrl));
         ddlUrl.setCellFactory(param -> new UrlListCell());
         ddlUrl.setButtonCell(new UrlListCell());
+        ddlUrl.getSelectionModel().selectFirst(); //Select 1st value as default
+
     }
 
     @FXML
