@@ -1,0 +1,14 @@
+.label{
+    -fx-text-fill: #F6F8F7;
+    -fx-font-family: Consolas
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: #393D46;
+    -fx-padding: 5;
+}
+
+.scroll-pane {
+    -fx-background-color: #393D46;
+    -fx-padding: 5;
+}
