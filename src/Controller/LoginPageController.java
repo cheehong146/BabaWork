@@ -204,9 +204,11 @@ public class LoginPageController extends Navigation implements Initializable {
                     ImageView imageView = new ImageView(image);
                     imageView.setFitHeight(16);
                     imageView.setFitWidth(16);
-                    Label lbl = new Label(item.substring(ICON_IDENTIFIER.length()));
-                    lbl.setStyle("-fx-text-fill: BLACK;");
-                    HBox hBox = new HBox(imageView, lbl);
+                    Label lblHttps = new Label(item.substring(ICON_IDENTIFIER.length(), ICON_IDENTIFIER.length() + "https://".length()));
+                    lblHttps.setStyle("-fx-text-fill: GREEN;");
+                    Label lblUrl = new Label(item.substring(ICON_IDENTIFIER.length() + "https://".length()));
+                    lblUrl.setStyle("-fx-text-fill: BLACK");
+                    HBox hBox = new HBox(imageView, lblHttps, lblUrl);
                     hBox.setAlignment(Pos.CENTER_LEFT);
                     setGraphic(hBox);
                 }else{

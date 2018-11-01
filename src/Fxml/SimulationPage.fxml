@@ -30,7 +30,7 @@
                      <HBox.margin>
                         <Insets bottom="15.0" top="15.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="btnExit" mnemonicParsing="false" onAction="#btnExitPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-border-color: #FFAD5B; -fx-text-fill: #FFAD5B; -fx-background-color: transparent; -fx-border-width: 3px;" text="EXIT SIMULATION">
+                  <Button fx:id="btnExit" mnemonicParsing="false" onAction="#btnExitPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-border-color: #1B0840; -fx-text-fill: #1B0840; -fx-background-color: transparent; -fx-border-width: 3px;" text="EXIT SIMULATION">
                      <HBox.margin>
                         <Insets bottom="15.0" right="15.0" top="15.0" />
                      </HBox.margin></Button>
