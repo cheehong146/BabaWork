@@ -8,10 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -77,6 +74,19 @@ public class SimulationPageController extends Navigation implements Initializabl
 
     }
 
+    private boolean isAllBlankAnswer(){
+        Pattern pattern = Pattern.compile("([\"'])(\\\\?.)*?\\1");//get label text from node
+        Matcher m = pattern.matcher(vBoxPython.getChildren().toString());
+        while(m.find()) {
+            String line = m.group(0).replace("'", "");
+            line = line.replace("\t", "");
+            if(line.equals("_______________________________________________"))
+                return false;
+        }
+        return true;
+    }
+
+
     private int getNumberOfCorrectAnswer(){//return the number of correctly drag-n-drop user input
         int correct = 0;
         Pattern pattern = Pattern.compile("([\"'])(\\\\?.)*?\\1");//get label text from node
@@ -88,10 +98,10 @@ public class SimulationPageController extends Navigation implements Initializabl
             if(mapLblAnswer.keySet().contains(lineCount)){//check if the line(label) number is the answer line
                 System.out.println("Matches: " + line);
                 System.out.println("Matches: " + mapLblAnswer.get(lineCount).getText());
-                if(mapLblAnswer.get(lineCount).getText().equals(line)){//check if user answer is the same as the given answer
+               if(mapLblAnswer.get(lineCount).getText().equals(line)){//check if user answer is the same as the given answer
                     System.out.println("Matches: " + line);
                     correct++;
-                }
+               }
             }
             lineCount++;
         }
@@ -175,7 +185,10 @@ public class SimulationPageController extends Navigation implements Initializabl
     }
     @FXML
     private void btnRunCodePressed(ActionEvent actionEvent){
-        showScoreDialog(actionEvent);
+        if (isAllBlankAnswer())
+            showScoreDialog(actionEvent);
+        else
+            showAlertDialog();
     }
 
     private void showScoreDialog(ActionEvent actionEvent){//pop-up a score dialog to show score based on user drag-n-drop input
@@ -224,6 +237,13 @@ public class SimulationPageController extends Navigation implements Initializabl
         Scene dialogScene = new Scene(dialogBorderPane, SCORE_DIALOG_WIDTH, SCORE_DIALOG_HEIGHT);
         dialog.setScene(dialogScene);
         dialog.show();
+    }
+
+    private void showAlertDialog(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText("All blank must be filled in");
+        alert.showAndWait();
     }
 
     @FXML

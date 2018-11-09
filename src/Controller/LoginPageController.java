@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -50,7 +51,9 @@ public class LoginPageController extends Navigation implements Initializable {
     @FXML
     private ComboBox ddlUrl;
 
-    private int totPoints;
+//    private int totPoints;
+    private boolean isBtnLoginClicked;
+    private Score userScore;//should have created a dictionary instead of object so i can iterate the variable easier, oh well
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,23 +63,46 @@ public class LoginPageController extends Navigation implements Initializable {
         String semiSecureUrl = "https://www.authcube.com";
         String secureUrl = ICON_IDENTIFIER + "https://www.authcube.com";
 
+        userScore = new Score();
+        isBtnLoginClicked = false;
+
         ddlUrl.setItems(FXCollections.observableArrayList(notSecureUrl, semiSecureUrl, secureUrl));
         ddlUrl.setCellFactory(param -> new UrlListCell());
         ddlUrl.setButtonCell(new UrlListCell());
         ddlUrl.getSelectionModel().selectFirst(); //Select 1st value as default
-
     }
 
     @FXML
     private void btnLoginClick(ActionEvent actionEvent) { //calculate password and url points and print out the total
-        System.out.println(txtUsername.getText() + ", " + txtPassword.getText());
-        totPoints = calcPointByPassword(txtPassword.getText());
-        totPoints += calcPointByUrl();
-        System.out.println("Total Points: " + totPoints);
+        boolean bothTextFieldFilledIn = false;
+
+        if (!txtUsername.getText().isEmpty() && !txtPassword.getText().isEmpty())
+            bothTextFieldFilledIn = true;
+
+        if (bothTextFieldFilledIn){
+            calcTotScore(userScore);
+            System.out.println("Total Points: " + userScore.getTotScore());
+            isBtnLoginClicked = true;
+        }else{
+            showLoginAlertDialog();
+        }
+
     }
 
     @FXML
     private void btnScoreClick(ActionEvent actionEvent) {//pop-up a dialog box, containing tot_score
+        if (isBtnLoginClicked) {
+            showScoreDialog();
+        }else{
+            showScoreAlertDialog();//show when user didnt press login button yet before click the score button
+        }
+    }
+
+    private void showScoreDialog(){
+        String fxAbelTextLargerStyle = "-fx-font-family: Abel; -fx-font-size: 24px;";
+        String fxAbelTextSmallerStyle = "-fx-font-family: Abel; -fx-font-size: 18px;";
+        String fxSystemTextBoldStyle = "-fx-font-size: 18px; -fx-font-weight: bold;";
+//        String cellBorderStyle = "-fx-border-width: 18px; -fx-border-color: #000000;";
         final Stage dialog = new Stage();
         dialog.setResizable(false);
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -84,38 +110,102 @@ public class LoginPageController extends Navigation implements Initializable {
         dialogVbox.setAlignment(Pos.CENTER);
 
         Text txtPreScore = new Text("YOU HAVE SCORED");
-        Text txtScore = new Text(String.valueOf(totPoints));
+        Text txtScore = new Text(String.valueOf(userScore.getTotScore()));
         Text txtPostScore = new Text(" POINTS OUT OF " + MAX_SCORE + " POINTS");
-        Text txtLinkInfo = new Text("Click on the link below to know how to create a strong password");
-        txtLinkInfo.setStyle("-fx-text-fill: #FF5959");
+        Text txtLinkInfoPre = new Text("PLEASE REFER TO ");
+        Text txtLinkInfoMid = new Text("HOW TO CREATE A STRONG PASSWORD ");
+        Text txtLinkInfoPost = new Text("ARTICLE ON OUR WEBSITE.");
 
-        txtPreScore.setStyle("-fx-font-family: Abel; -fx-text-fill: #393D46; -fx-font-size: 24px");
-        txtPostScore.setStyle("-fx-font-family: Abel; -fx-text-fill: #393D46; -fx-font-size: 24px;");
-        txtScore.setStyle("-fx-font-family: Abel; -fx-text-fill: #4C9DA6; -fx-font-size: 24px;");
-        txtLinkInfo.setStyle("-fx-font-family: Abel; -fx-text-fill: #4C9DA6; -fx-font-size: 18px;");
+        txtPreScore.setStyle(fxAbelTextLargerStyle);
+        txtPostScore.setStyle(fxAbelTextLargerStyle);
+        txtScore.setStyle(fxAbelTextLargerStyle);
+        txtLinkInfoPre.setStyle(fxAbelTextSmallerStyle);
+        txtLinkInfoMid.setStyle(fxSystemTextBoldStyle);
+        txtLinkInfoPost.setStyle(fxAbelTextSmallerStyle);
 
+        //top section with how much score over the max score
         HBox scoreHBox = new HBox(txtScore, txtPostScore);
         scoreHBox.setAlignment(Pos.CENTER);
 
+        //middle section, the grid with breakdown of score
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(20);
+        gridPane.setVgap(15);
+        gridPane.getStylesheets().add("@../StyleSheets/ScoreGridPane.css");
+            //header
+        Label requirementHeader = new Label("REQUIREMENTS");
+        Label pointHeader = new Label("POINTS");
+        requirementHeader.setStyle(fxSystemTextBoldStyle + " -fx-underline: true;");
+        pointHeader.setStyle(fxSystemTextBoldStyle + " -fx-underline: true;");
+            //left cell
+        Text lengthCell = new Text("MINIMUM OF 8 CHARACTERS");
+        Text uppercaseCell = new Text("UPPERCASE LETTER");
+        Text lowercaseCell = new Text("LOWERCASE LETTER");
+        Text numberCell = new Text("NUMBERS");
+        Text specialCharCell = new Text("SPECIAL CHARACTER ");
+        Text secureUrlCell = new Text("SECURE URL");
+            //right cell
+        Text lengthPointCell = new Text(userScore.getLength() + " POINTS");
+        Text uppercasePointCell = new Text(userScore.getUppercase() + " POINTS");
+        Text lowercasePointCell = new Text(userScore.getLowercase() + " POINTS");
+        Text numberPointCell = new Text(userScore.getDigits() + " POINTS");
+        Text specialCharPointCell = new Text(userScore.getSymbol() + " POINTS");
+        Text secureUrlPointCell = new Text(userScore.getUrl() + " POINTS");
+            //cell styling
+        lengthCell.setStyle(fxAbelTextSmallerStyle);
+        uppercaseCell.setStyle(fxAbelTextSmallerStyle);
+        lowercaseCell.setStyle(fxAbelTextSmallerStyle);
+        numberCell.setStyle(fxAbelTextSmallerStyle);
+        specialCharCell.setStyle(fxAbelTextSmallerStyle);
+        secureUrlCell.setStyle(fxAbelTextSmallerStyle);
+        lengthPointCell.setStyle(fxAbelTextSmallerStyle);
+        uppercasePointCell.setStyle(fxAbelTextSmallerStyle);
+        lowercasePointCell.setStyle(fxAbelTextSmallerStyle);
+        numberPointCell.setStyle(fxAbelTextSmallerStyle);
+        specialCharPointCell.setStyle(fxAbelTextSmallerStyle);
+        secureUrlPointCell.setStyle(fxAbelTextSmallerStyle);
+        //grid cell add children
+        gridPane.add(requirementHeader, 0,0 );
+        gridPane.add(pointHeader, 1,0 );
+        gridPane.add(lengthCell, 0,1 );
+        gridPane.add(lengthPointCell, 1,1 );
+        gridPane.add(uppercaseCell, 0,2 );
+        gridPane.add(uppercasePointCell, 1,2 );
+        gridPane.add(lowercaseCell, 0,3 );
+        gridPane.add(lowercasePointCell, 1,3 );
+        gridPane.add(specialCharCell, 0,4 );
+        gridPane.add(specialCharPointCell, 1,4 );
+        gridPane.add(secureUrlCell, 0,5 );
+        gridPane.add(secureUrlPointCell, 1,5 );
+
+        //bottom section, help section with please refer to how to create a strong password article on our website
+        HBox hBoxLinkInfo = new HBox(txtLinkInfoPre, txtLinkInfoMid, txtLinkInfoPost);
+        hBoxLinkInfo.setAlignment(Pos.CENTER);
+
         dialogVbox.getChildren().add(txtPreScore);
         dialogVbox.getChildren().add(scoreHBox);
-        dialogVbox.getChildren().add(txtLinkInfo);
+        dialogVbox.getChildren().add(gridPane);
+        dialogVbox.getChildren().add(hBoxLinkInfo);
         dialogVbox.setStyle("-fx-background-color: #FFAD5B");
-
-        Hyperlink strongPasswordLink = new Hyperlink();
-        strongPasswordLink.setText("Click Here");
-        dialogVbox.getChildren().add(strongPasswordLink);
 
         Scene dialogScene = new Scene(dialogVbox, SCORE_DIALOG_WIDTH, SCORE_DIALOG_HEIGHT);
         dialog.setScene(dialogScene);
         dialog.show();
+    }
 
-        strongPasswordLink.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Clicked on storng password link");
-            }
-        });
+    private void showScoreAlertDialog(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText("User must be log in first, before clicking score button");
+        alert.showAndWait();
+    }
+
+    private void showLoginAlertDialog(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText("Both field which are username, and password must be filled in first");
+        alert.showAndWait();
     }
 
     @FXML
@@ -136,19 +226,23 @@ public class LoginPageController extends Navigation implements Initializable {
         loadStage("/Fxml/MenuPage.fxml", actionEvent);
     }
 
-    private int calcPointByUrl(){
-        int points = 0;
-        String selectedItem = ddlUrl.getSelectionModel().getSelectedItem().toString();//get the user selected url combo-box
-        if(selectedItem.substring(0, 5).equals("https")){//if https without lock icon, +5 point
-            points = 5;
-        }else if (selectedItem.substring(0, ICON_IDENTIFIER.length()).equals(ICON_IDENTIFIER)){//else if https with lock icon, +10 point
-            points = 10;
-        }
-        System.out.println("Points by URL: " + points);
-        return  points;
+    private void calcTotScore(Score userScore){
+        calcPointByUrl(userScore);
+        calcPointByPassword(userScore);
     }
 
-    private int calcPointByPassword(String pass){
+    private void calcPointByUrl(Score score){
+        String selectedItem = ddlUrl.getSelectionModel().getSelectedItem().toString();//get the user selected url combo-box
+        if(selectedItem.substring(0, 5).equals("https")){//if https without lock icon, +5 point
+            score.setUrl(5);
+        }else if (selectedItem.substring(0, ICON_IDENTIFIER.length()).equals(ICON_IDENTIFIER)){//else if https with lock icon, +10 point
+            score.setUrl(10);
+        }
+        System.out.println("Points by URL: " + score.getUrl());
+    }
+
+    private void calcPointByPassword(Score score){
+        String pass = txtPassword.getText();
         /*criteria of point for password strength rule, if matches rules +x Points, else +0 points
         +10 points, for length if 8 and above
         +10 points, if got lowercase
@@ -156,14 +250,13 @@ public class LoginPageController extends Navigation implements Initializable {
         +10 points, if got digits
         +10 points, if got symbol
         */
-        int points = 0;
         boolean lowercaseFlag = false;
         boolean uppercaseFlag = false;
         boolean numberFlag = false;
         String regexSymbol = "[:?!@#$%^&*()]";
 
         if (pass.length() >= 8)//pass length check
-            points += 10;
+            userScore.setLength(10);
 
         char [] chPass = pass.toCharArray();
         //check if lowercase, uppercase, or contain digit
@@ -179,17 +272,15 @@ public class LoginPageController extends Navigation implements Initializable {
             if(lowercaseFlag && uppercaseFlag && numberFlag)
                 break;
         }
-        points += lowercaseFlag? 10: 0;
-        points += uppercaseFlag? 10: 0;
-        points += numberFlag? 10: 0;
+        userScore.setLowercase(lowercaseFlag? 10: 0);
+        userScore.setUppercase(uppercaseFlag? 10: 0);
+        userScore.setDigits(numberFlag? 10: 0);
 
         //check if password contain symbol
         Pattern pattern = Pattern.compile(regexSymbol);
         Matcher matcher = pattern.matcher(pass);
         if (matcher.find())
-            points += 10;
-
-        return points;
+            userScore.setSymbol(10);
     }
 
     class UrlListCell extends ListCell<String> {//custom class for the combo-bos URL since got icon, we need to create our own ListCell
@@ -220,5 +311,76 @@ public class LoginPageController extends Navigation implements Initializable {
             setText("");
         }
 
+    }
+
+    class Score{
+        /*criteria of point for password strength rule, if matches rules +x Points, else +0 points
+        +10 points, for length if 8 and above
+        +10 points, if got lowercase
+        +10 points, if got uppercase
+        +10 points, if got digits
+        +10 points, if got symbol
+        */
+        private int length;
+        private int lowercase;
+        private int uppercase;
+        private int digits;
+        private int symbol;
+        private int url;
+
+        public Score() {
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
+        }
+
+        public int getLowercase() {
+            return lowercase;
+        }
+
+        public void setLowercase(int lowercase) {
+            this.lowercase = lowercase;
+        }
+
+        public int getUppercase() {
+            return uppercase;
+        }
+
+        public void setUppercase(int uppercase) {
+            this.uppercase = uppercase;
+        }
+
+        public int getDigits() {
+            return digits;
+        }
+
+        public void setDigits(int digits) {
+            this.digits = digits;
+        }
+
+        public int getSymbol() {
+            return symbol;
+        }
+
+        public void setSymbol(int symbol) {
+            this.symbol = symbol;
+        }
+
+        public int getUrl() {
+            return url;
+        }
+
+        public void setUrl(int url) {
+            this.url = url;
+        }
+
+        public int getTotScore(){
+            return  length+lowercase+uppercase+digits+lowercase+url;
+        }
     }
 }
