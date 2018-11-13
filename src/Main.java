@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Fxml/LoginPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Fxml/MenuPage.fxml"));
         primaryStage.setTitle("Simulation");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));
