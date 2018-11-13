@@ -176,8 +176,10 @@ public class LoginPageController extends Navigation implements Initializable {
         gridPane.add(lowercasePointCell, 1,3 );
         gridPane.add(specialCharCell, 0,4 );
         gridPane.add(specialCharPointCell, 1,4 );
-        gridPane.add(secureUrlCell, 0,5 );
-        gridPane.add(secureUrlPointCell, 1,5 );
+        gridPane.add(numberCell, 0, 5);
+        gridPane.add(numberPointCell, 1, 5);
+        gridPane.add(secureUrlCell, 0,6 );
+        gridPane.add(secureUrlPointCell, 1,6 );
 
         //bottom section, help section with please refer to how to create a strong password article on our website
         HBox hBoxLinkInfo = new HBox(txtLinkInfoPre, txtLinkInfoMid, txtLinkInfoPost);
@@ -380,7 +382,7 @@ public class LoginPageController extends Navigation implements Initializable {
         }
 
         public int getTotScore(){
-            return  length+lowercase+uppercase+digits+lowercase+url;
+            return  length+lowercase+uppercase+digits+symbol+url;
         }
     }
 }

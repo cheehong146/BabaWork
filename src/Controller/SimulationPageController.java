@@ -24,9 +24,9 @@ import java.util.regex.Pattern;
 
 public class SimulationPageController extends Navigation implements Initializable {
 
-    private String ANSWER_FILELOC = "C:\\Users\\moonl\\OneDrive\\Documents\\BabaWork\\BabaWork\\src\\BruteForceCode\\answer.txt";
-    private String HTML_FILELOC = "C:\\Users\\moonl\\OneDrive\\Documents\\BabaWork\\BabaWork\\src\\BruteForceCode\\htmlBruteForce.txt";
-    private String PYTHON_FILELOC = "C:\\Users\\moonl\\OneDrive\\Documents\\BabaWork\\BabaWork\\src\\BruteForceCode\\pythonBruteForce.txt";
+    private String ANSWER_FILELOC = "src/BruteForceCode/answer.txt";
+    private String HTML_FILELOC = "src/BruteForceCode/htmlBruteForce.txt";
+    private String PYTHON_FILELOC = "src/BruteForceCode/pythonBruteForce.txt";
     private String BLANK_ANSWER_SPACE = "_______________________________________________";
     private int SCORE_DIALOG_WIDTH = 800;
     private int SCORE_DIALOG_HEIGHT = 400;
