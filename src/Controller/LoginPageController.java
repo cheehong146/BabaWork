@@ -1,5 +1,6 @@
 package Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,13 +23,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginPageController extends Navigation implements Initializable {
 
     private int SCORE_DIALOG_WIDTH = 800;
-    private int SCORE_DIALOG_HEIGHT = 500;
+    private int SCORE_DIALOG_HEIGHT = 450;
     private String URL_LOCK_ICON_LOC = "images/lock.png";
     private String ICON_IDENTIFIER = ":lock:";
     private String MAX_SCORE = "60";
@@ -35,11 +39,7 @@ public class LoginPageController extends Navigation implements Initializable {
     @FXML
     private Button btnLogin;
     @FXML
-    private Hyperlink hlRegister;
-    @FXML
     private Button btnScore;
-    @FXML
-    private Button btnCode;
     @FXML
     private TextField txtUsername;
     @FXML
@@ -70,6 +70,20 @@ public class LoginPageController extends Navigation implements Initializable {
         ddlUrl.setCellFactory(param -> new UrlListCell());
         ddlUrl.setButtonCell(new UrlListCell());
         ddlUrl.getSelectionModel().selectFirst(); //Select 1st value as default
+
+        Timer timer = new java.util.Timer();
+
+        timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        urlPopup();
+                    }
+                });
+            }
+        }, 1000);
+
+
     }
 
     @FXML
@@ -80,6 +94,7 @@ public class LoginPageController extends Navigation implements Initializable {
             bothTextFieldFilledIn = true;
 
         if (bothTextFieldFilledIn){
+            registerGoodPopup();
             calcTotScore(userScore);
             System.out.println("Total Points: " + userScore.getTotScore());
             isBtnLoginClicked = true;
@@ -89,16 +104,28 @@ public class LoginPageController extends Navigation implements Initializable {
 
     }
 
+    private void registerGoodPopup(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("REGISTRATION SUCCESSFUL");
+        alert.setContentText("Please click the SCORE button to view your score");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void ddlUrlOnAction(ActionEvent actionEvent){
+        loginInfoPopup();
+    }
+
     @FXML
     private void btnScoreClick(ActionEvent actionEvent) {//pop-up a dialog box, containing tot_score
         if (isBtnLoginClicked) {
-            showScoreDialog();
+            showScoreDialog(actionEvent);
         }else{
             showScoreAlertDialog();//show when user didnt press login button yet before click the score button
         }
     }
 
-    private void showScoreDialog(){
+    private void showScoreDialog(ActionEvent actionEvent){
         String fxAbelTextLargerStyle = "-fx-font-family: Abel; -fx-font-size: 24px;";
         String fxAbelTextSmallerStyle = "-fx-font-family: Abel; -fx-font-size: 18px;";
         String fxSystemTextBoldStyle = "-fx-font-size: 18px; -fx-font-weight: bold;";
@@ -185,11 +212,28 @@ public class LoginPageController extends Navigation implements Initializable {
         HBox hBoxLinkInfo = new HBox(txtLinkInfoPre, txtLinkInfoMid, txtLinkInfoPost);
         hBoxLinkInfo.setAlignment(Pos.CENTER);
 
+        //menu button at left most bottom
+        Button btnMainMenu = new Button("Main Menu");
+        VBox vBoxBottom = new VBox(btnMainMenu);
+        vBoxBottom.setAlignment(Pos.BOTTOM_RIGHT);
+
+        btnMainMenu.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                closeCurScene(actionEvent);
+                loadStage("/Fxml/MainMenuPage.fxml", actionEvent);
+            }
+        });
+
+
         dialogVbox.getChildren().add(txtPreScore);
         dialogVbox.getChildren().add(scoreHBox);
         dialogVbox.getChildren().add(gridPane);
         dialogVbox.getChildren().add(hBoxLinkInfo);
+        dialogVbox.getChildren().add(vBoxBottom);
         dialogVbox.setStyle("-fx-background-color: #FFAD5B");
+
+
 
         Scene dialogScene = new Scene(dialogVbox, SCORE_DIALOG_WIDTH, SCORE_DIALOG_HEIGHT);
         dialog.setScene(dialogScene);
@@ -198,15 +242,15 @@ public class LoginPageController extends Navigation implements Initializable {
 
     private void showScoreAlertDialog(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText("User must be log in first, before clicking score button");
+        alert.setTitle("ERROR");
+        alert.setContentText("PLEASE CLICK THE LOGIN BUTTON BEFORE VIEWING THE SCORE");
         alert.showAndWait();
     }
 
     private void showLoginAlertDialog(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText("Both field which are username, and password must be filled in first");
+        alert.setTitle("ERROR");
+        alert.setContentText("PLEASE FILL IN THE USERNAME AND PASSWORD FIELD");
         alert.showAndWait();
     }
 
@@ -217,15 +261,9 @@ public class LoginPageController extends Navigation implements Initializable {
     }
 
     @FXML
-    private void btnViewCodeClick(ActionEvent actionEvent){
-        closeCurScene(actionEvent);
-        loadStage("/Fxml/ViewCodePage.fxml", actionEvent);
-    }
-
-    @FXML
     private void btnBackPressed(ActionEvent actionEvent){
         closeCurScene(actionEvent);
-        loadStage("/Fxml/MenuPage.fxml", actionEvent);
+        loadStage("/Fxml/MainMenuPage.fxml", actionEvent);
     }
 
     private void calcTotScore(Score userScore){
@@ -285,6 +323,25 @@ public class LoginPageController extends Navigation implements Initializable {
             userScore.setSymbol(10);
     }
 
+    private void urlPopup(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("URL");
+        alert.setContentText("PLEASE SELECT THE MOST SECURE URL ");
+        alert.showAndWait();
+    }
+
+    private void loginInfoPopup(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("REGISTRATION");
+        alert.setContentText("To prevent unauthorized access to your account, you are required to create a username and password." +
+                "\n\n" +
+                "Your password should include:" +
+                "\n1. More than 8 characters" +
+                "\n2. Alphabets and numbers" +
+                "\n3. Special character (optional)");
+        alert.showAndWait();
+    }
+
     class UrlListCell extends ListCell<String> {//custom class for the combo-bos URL since got icon, we need to create our own ListCell
         @Override
         protected void updateItem(String item, boolean empty) {
@@ -312,6 +369,8 @@ public class LoginPageController extends Navigation implements Initializable {
             }
             setText("");
         }
+
+
 
     }
 

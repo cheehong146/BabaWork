@@ -17,7 +17,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="15.0" HBox.hgrow="ALWAYS">
                <children>
-                   <ToggleButton fx:id="btnBack" onAction="#btnBackPressed" stylesheets="@../StyleSheets/ToggleButtonBack.css" />
+                   <ToggleButton fx:id="btnBack" onAction="#btnBackPressed" text="Main Menu" stylesheets="@../StyleSheets/ToggleButtonBack.css" />
                    <ToggleButton fx:id="btnRetry" onAction="#btnRetryPressed" stylesheets="@../StyleSheets/ToggleButtonRefresh.css" />
                </children>
                <HBox.margin>

@@ -1,5 +1,4 @@
 .toggle-button {
-    -fx-graphic: url('../images/left-arrow.png');
     -fx-min-height: 50;
     -fx-max-height: 50;
     -fx-min-width: 128;

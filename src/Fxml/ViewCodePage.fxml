@@ -20,7 +20,7 @@
             </Button>
          </bottom>
          <top>
-            <ToggleButton fx:id="btnBack" onAction="#btnBackClick" stylesheets="@../StyleSheets/ToggleButtonBack.css">
+            <ToggleButton fx:id="btnBack" onAction="#btnBackClick" text="Main Menu" stylesheets="@../StyleSheets/ToggleButtonBack.css">
                <BorderPane.margin>
                   <Insets left="15.0" top="15.0" />
                </BorderPane.margin>

@@ -25,7 +25,7 @@ public class ViewCodeController extends Navigation implements Initializable {
     @FXML
     private void btnBackClick(ActionEvent actionEvent){
         closeCurScene(actionEvent);
-        loadStage("/Fxml/LoginPage.fxml", actionEvent);
+        loadStage("/Fxml/MainMenuPage.fxml", actionEvent);
     }
 
     @FXML

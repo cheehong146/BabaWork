@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -24,14 +25,14 @@ public class WebsiteController extends Navigation implements Initializable {
     }
 
     @FXML
-    private void btnBackClick(ActionEvent actionEvent){
-        closeCurScene(actionEvent);
-        loadStage("/Fxml/MenuPage.fxml", actionEvent);
-    }
-
-    @FXML
     private void btnContinueClick(ActionEvent actionEvent){
         closeCurScene(actionEvent);
         loadStage("/Fxml/LoginPage.fxml", actionEvent);
+    }
+
+    @FXML
+    private void btnBackClick(ActionEvent actionEvent){
+        closeCurScene(actionEvent);
+        loadStage("/Fxml/MainMenuPage.fxml", actionEvent);
     }
 }
